@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solar System</title>
+    <link rel="stylesheet" href="css/styleSystem.css">
+    <link rel="shortcut icon" href="media/solarsystem_96075.png">
+</head>
+<body>
+<div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #333; color: #fff; padding: 10px; text-align: center; z-index: 100; font-family: 'Tahoma', sans-serif">
+    Questo sito utilizza i cookie per garantire una migliore esperienza di navigazione e una maggiore sicurezza. Se rifiuti ci potranno essere delle conseguenze (Considerando 35 GDPR) <a href="cookie.html" target="_blank">Visualizza i nostri partner</a> <button class="cookie" onclick="checkCookie()">Accetta</button><button class="cookieR" onclick="rifiutaCookie()">Rifiuta</button>
+</div>
+<div class="date">
+    <div class="year"></div>
+    <div class="month"></div>
+    <div class="day"></div>
+</div>
+<div class="container">
+    <div class="sun"></div>
+    <div class="earth">
+        <div class="moon"></div>
+    </div>
+</div>
+
+<script>
+    let cookieSet = false;
+    var year = 2024;
+    var month = 1;
+    var day = 1;
+    document.querySelector('.year').innerHTML = year;
+    document.querySelector('.month').innerHTML = month;
+    document.querySelector('.day').innerHTML = day;
+
+    function updateDate() {
+        year++;
+        document.querySelector('.year').innerHTML = year;
+    }
+    function updateMonth() {
+        month++;
+        if (month > 12) {
+            month = 1;
+        }
+        document.querySelector('.month').innerHTML = month;
+    }
+    function updateDay() {
+        day++;
+        //30gg
+        if (month == 11 || month == 4 || month == 6 || month == 9) {
+            if (day > 30) {
+                day = 1;
+            }
+        }
+        //31gg
+        else if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+            if (day > 31) {
+                day = 1;
+            }
+        }
+        //28gg
+        else if (month == 2) {
+            if (day > 28) {
+                day = 1;
+            }
+        }
+        //anno bisestile
+        if (year % 4 == 0 && month == 2) {
+            if (day > 29) {
+                day = 1;
+            }
+        }
+        document.querySelector('.day').innerHTML = day;
+    }
+    setInterval(updateDay, 100);
+    setInterval(updateMonth, 3041);
+    setInterval(updateDate, 36500);
+    function setCookie(cname,cvalue,exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+            }
+        }
+    return "";
+    }
+    function checkCookie() {
+        let user = getCookie("username");
+        if (user != "") {
+            alert("Welcome again " + user);
+            cookieSet = true;
+        } else {
+            user = prompt("Please enter your name:","");
+            if (user != "" && user != null) {
+            setCookie("username", user, 30);
+            }
+        }
+        chiudiCookie();
+    }
+    function chiudiCookie() {
+        document.getElementById("cookie-banner").style.display = "none";
+    }
+    function rifiutaCookie() {
+        window.close();
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        const button = document.querySelector('.cookieR');
+        let originalTransform = button.style.transform;
+        if(cookieSet === true){
+            button.style.display = "none";
+        }
+
+        button.addEventListener('mouseover', function () {
+            const maxX = window.innerWidth - button.clientWidth;
+            const maxY = window.innerHeight - button.clientHeight;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            button.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        });
+
+        button.addEventListener('mouseout', function () {
+            button.style.transform = originalTransform;
+        });
+    });
+
+</script>
+</body>
+</html>

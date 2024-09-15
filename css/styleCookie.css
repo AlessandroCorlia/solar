@@ -1,0 +1,31 @@
+body {
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    overflow: hidden;
+}
+
+header {
+    text-align: center;
+}
+
+#gifacasoMERICAA {
+    display: flex;
+    justify-content: space-around;
+}
+
+#gifacasoMERICAA img {
+    width: 200px; /* Imposta le dimensioni delle immagini secondo necessità */
+    height: 200px;
+}
+
+#playButton {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
